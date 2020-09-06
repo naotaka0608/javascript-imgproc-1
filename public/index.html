@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像処理テスト</title>
+</head>
+<body>
+    <div>
+        <input type="button" name="showimage" value="表示" onclick="ShowImage()">
+        <input type="button" name="reverse" value="ネガポジ" onclick="Reverse()">
+        <input type="button" name="grayscale" value="グレースケール" onclick="GrayScale()">
+        <input type="button" name="otsuBinary" value="2値化" onclick="OtsuBinary()">    
+    </div>
+    <br>
+    <div>
+        <canvas id="canvas1" width="480" height="320">
+            Canvasをサポートしたブラウザを使用してください。
+        </canvas>
+        <canvas id="canvas2" width="480" height="320">
+            Canvasをサポートしたブラウザを使用してください。
+        </canvas>
+        <canvas id="canvas3" width="480" height="320">
+            Canvasをサポートしたブラウザを使用してください。
+        </canvas>                
+        <canvas id="canvas4" width="480" height="320">
+            Canvasをサポートしたブラウザを使用してください。
+        </canvas>                    
+    </div>
+    <script src="./javascripts/ShowImage.js"></script>
+    <script src="./javascripts/Reverse.js"></script>
+    <script src="./javascripts/GrayScale.js"></script>
+    <script src="./javascripts/OtsuBinary.js"></script>
+</body>
+</html>
