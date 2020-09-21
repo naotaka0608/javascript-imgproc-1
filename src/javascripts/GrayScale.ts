@@ -1,11 +1,14 @@
-const GrayScale = () =>{
-    const canvas = document.getElementById('canvas2');
+const GrayScale: any = document.getElementById('GrayScale');
+
+GrayScale.addEventListener('click', () => {
+  
+    const canvas = <HTMLCanvasElement>document.getElementById('canvas3');
     if(!canvas){
         console.log('Canvas要素の取得に失敗');
         return;
     }
 
-    const context = canvas.getContext('2d');
+    const context: any = canvas.getContext('2d');
 
     const image = new Image();
 
@@ -34,4 +37,5 @@ const GrayScale = () =>{
         }
         context.putImageData(imageData, 0, 0);
     };
-}
+  
+}, false);

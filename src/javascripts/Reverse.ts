@@ -1,11 +1,14 @@
-const Reverse = () =>{
-    const canvas = document.getElementById('canvas3');
+const Reverse: any = document.getElementById('Reverse');
+
+Reverse.addEventListener('click', () => {
+  
+    const canvas = <HTMLCanvasElement>document.getElementById('canvas2');
     if(!canvas){
         console.log('Canvas要素の取得に失敗');
         return;
     }
 
-    const context = canvas.getContext('2d');
+    const context: any = canvas.getContext('2d');
 
     const image = new Image();
 
@@ -26,6 +29,5 @@ const Reverse = () =>{
         }
         context.putImageData(imageData, 0, 0);
     };
-
-
-}
+  
+}, false);

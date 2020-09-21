@@ -1,11 +1,14 @@
-const OtsuBinary = () =>{
-    const canvas = document.getElementById('canvas4');
+const OtsuBinary: any = document.getElementById('OtsuBinary');
+
+OtsuBinary.addEventListener('click', () => {
+  
+    const canvas : HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('canvas4');
     if(!canvas){
         console.log('Canvas要素の取得に失敗');
         return;
     }
 
-    const context = canvas.getContext('2d');
+    const context: any = canvas.getContext('2d');
 
     const image = new Image();
 
@@ -63,9 +66,11 @@ const OtsuBinary = () =>{
 
         context.putImageData(imageData, 0, 0);
     };
-}
+  
+}, false);
 
-const getThreshold = (hist, n) => {
+
+const getThreshold = (hist: any, n: any) => {
     let max = (1000.0);
     let thresh = 0;
 

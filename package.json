@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -e html ./bin/www"
+    "start": "nodemon -e html ./bin/www",
+    "build": "webpack --devtool source-map",
+    "build:dev": "webpack"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -14,7 +16,18 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "@types/node": "^14.11.1",
     "browser-sync": "^2.26.12",
-    "nodemon": "^2.0.4"
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^4.3.0",
+    "file-loader": "^6.1.0",
+    "html-webpack-plugin": "^4.4.1",
+    "image-webpack-loader": "^7.0.1",
+    "mini-css-extract-plugin": "^0.11.2",
+    "nodemon": "^2.0.4",
+    "ts-loader": "^8.0.4",
+    "typescript": "^4.0.3",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
   }
 }
