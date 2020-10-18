@@ -1,9 +1,8 @@
-import Reverse from "./imageProc/Reverse";
-import GrayScale from "./imageProc/GrayScale";
-import OtsuBinary from "./imageProc/OtsuBinary";
-import { Opening, Closing } from "./imageProc/OpenClose";
-import Labeling from "./imageProc/Labeling";
-import { ImageData32To8, ImageData8To32 } from "./imageProc/MyLib";
+import { Binary } from "./imageProc/Binary"
+import { NoiseFilter } from "./imageProc/NoiseFilter"
+import { FeatureExtra } from "./imageProc/FeatureExtra";
+import { BasicLib } from "./imageProc/BasicLib";
+import { Affine } from "./imageProc/Affine";
 
 // ------------------------------------------------------------------
 // 
@@ -70,6 +69,7 @@ reverse.addEventListener('click', () => {
     const context: any = canvas.getContext('2d');
 
     const image = new Image();
+    const basicLib = new BasicLib();
 
     image.src = "../images/lenna.jpeg"
 
@@ -78,7 +78,7 @@ reverse.addEventListener('click', () => {
 
         const imageData = context.getImageData(0, 0, image.width, image.height);
 
-        Reverse(imageData);
+        basicLib.Reverse(imageData);
 
         context.putImageData(imageData, 0, 0);
     };
@@ -100,6 +100,7 @@ grayScale.addEventListener('click', () => {
     const context: any = canvas.getContext('2d');
     
     const image = new Image();
+    const basicLib = new BasicLib();
 
     image.src = "../images/lenna.jpeg"
 
@@ -108,7 +109,7 @@ grayScale.addEventListener('click', () => {
 
         const imageData = context.getImageData(0, 0, image.width, image.height);
 
-        GrayScale(imageData);
+        basicLib.GrayScale(imageData);
 
         context.putImageData(imageData, 0, 0);
     };
@@ -144,20 +145,23 @@ otsuBinary.addEventListener('click', () => {
         const width = ImageData32.width;
         const heigth = ImageData32.height;
         const length = ImageData32.data.length;
+        const basicLib = new BasicLib();
+        const binary = new Binary();
 
         let ImageData8: Array<number> = new Array(ImageData32.width * ImageData32.height);
 
         // グレースケール
-        GrayScale(ImageData32);
+        basicLib.GrayScale(ImageData32);
+
 
         // 32bitから8bitへ変換
-        ImageData32To8(ImageData32, ImageData8);
+        basicLib.ImageData32To8(ImageData32, ImageData8);
 
         // 判別分析法による2値化
-        OtsuBinary(ImageData8, width, heigth);
+        binary.OtsuBinary(ImageData8, width, heigth);
 
         // 8bitから32bitへ変換
-        ImageData8To32(ImageData8, ImageData32);
+        basicLib.ImageData8To32(ImageData8, ImageData32);
 
         context.putImageData(ImageData32, 0, 0);
     };  
@@ -190,24 +194,27 @@ opening.addEventListener('click', () => {
         const width = ImageData32.width;
         const heigth = ImageData32.height;
         const length = ImageData32.data.length;
-    
+        const basicLib = new BasicLib();
+        const noiseFilter = new NoiseFilter();
+        const binary = new Binary();
+
         let ImageData8: Array<number> = new Array(ImageData32.width * ImageData32.height);
     
         // グレースケール
-        GrayScale(ImageData32);
+        basicLib.GrayScale(ImageData32);
     
         // 32bitから8bitへ変換
-        ImageData32To8(ImageData32, ImageData8);
+        basicLib.ImageData32To8(ImageData32, ImageData8);
     
         // 判別分析法による2値化
-        OtsuBinary(ImageData8, width, heigth);
+        binary.OtsuBinary(ImageData8, width, heigth);
     
         // OpenClose
-        Closing(ImageData8, width, heigth, 3);
-        Opening(ImageData8, width, heigth, 3);
+        noiseFilter.Closing(ImageData8, width, heigth, 3);
+        noiseFilter.Opening(ImageData8, width, heigth, 3);
     
         // 8bitから32bitへ変換
-        ImageData8To32(ImageData8, ImageData32);
+        basicLib.ImageData8To32(ImageData8, ImageData32);
 
         context.putImageData(ImageData32, 0, 0);
     };
@@ -216,7 +223,7 @@ opening.addEventListener('click', () => {
 
 // ------------------------------------------------------------------
 // 
-/*
+
 const labeling: any = document.getElementById('Labeling');
 
 labeling.addEventListener('click', () => {
@@ -241,30 +248,34 @@ labeling.addEventListener('click', () => {
         const width = ImageData32.width;
         const heigth = ImageData32.height;
         const length = ImageData32.data.length;
-    
-        let ImageData8: Array<number> = new Array(ImageData32.width * ImageData32.height);
+        const basicLib = new BasicLib();
+        const noiseFilter = new NoiseFilter();
+        const binary = new Binary();
+        const featureExtra = new FeatureExtra();
+
+        let imageData8: Array<number> = new Array(ImageData32.width * ImageData32.height);
     
         // グレースケール
-        GrayScale(ImageData32);
+        basicLib.GrayScale(ImageData32);
     
         // 32bitから8bitへ変換
-        ImageData32To8(ImageData32, ImageData8);
+        basicLib.ImageData32To8(ImageData32, imageData8);
     
         // 判別分析法による2値化
-        OtsuBinary(ImageData8, width, heigth);
+        binary.OtsuBinary(imageData8, width, heigth);
     
         // OpenClose
-        Closing(ImageData8, width, heigth, 3);
-        Opening(ImageData8, width, heigth, 3);
+        noiseFilter.Closing(imageData8, width, heigth, 3);
+        noiseFilter.Opening(imageData8, width, heigth, 3);
     
         // ラベリング
-        Labeling(ImageData8, width, heigth);
+        //let ImageData8_labeling: Array<number> = new Array(ImageData32.width * ImageData32.height);
+        //featureExtra.Labeling(imageData8, imageData8_labeling, width, heigth);
     
         // 8bitから32bitへ変換
-        ImageData8To32(ImageData8, ImageData32);
+        basicLib.ImageData8To32(imageData8, ImageData32);
 
         context.putImageData(ImageData32, 0, 0);
     };
   
 }, false);
-*/
