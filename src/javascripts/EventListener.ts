@@ -283,8 +283,9 @@ labeling.addEventListener('click', () => {
             imageData8_labeling[h] = new Array(width).fill(0);
         }
 
-        //featureExtra.Labeling(imageData8, imageData8_labeling, width, height);
-    
+        featureExtra.Labeling(imageData8, imageData8_labeling, width, height);
+        let cnt = featureExtra.GetLabelCnt();
+        console.log("ラベル数：" + cnt);
         // 8bitから32bitへ変換
         //basicLib.ImageData2d8bitTo1d32bit(imageData8, ImageData32);
         basicLib.ImageData2d8bitTo1d32bit(imageData8_labeling, ImageData32);
