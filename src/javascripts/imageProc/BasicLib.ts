@@ -1,6 +1,6 @@
 export class BasicLib
 {
-
+    // グレースケール
     public GrayScale = (ImageData32: any) => {
         const length: number = ImageData32.data.length;
         const pixel: any = ImageData32.data;
@@ -20,6 +20,7 @@ export class BasicLib
         }    
     }
 
+    // ネガポジ
     public Reverse = (imageData32: any) => {
         const length = imageData32.data.length;
         const pixel = imageData32.data;
@@ -31,7 +32,8 @@ export class BasicLib
         }    
     }
     
-    public ImageData32To8 = (ImageData32: any, ImageData8: Array<number>) => {
+    // 1次元32bit画像 → 1次元8bit画像
+    public ImageData1d32bitTo1d8bit = (ImageData32: any, ImageData8: Array<number>) => {
         const length: number = ImageData32.data.length;
         const pixel: any = ImageData32.data;
         
@@ -43,7 +45,8 @@ export class BasicLib
         }    
     }
 
-    public ImageData8To32 = (ImageData8: Array<number>, ImageData32: any) => {
+    // 1次元8bit画像 → 1次元32bit画像
+    public ImageData1d8bitTo1d32bit = (ImageData8: Array<number>, ImageData32: any) => {
         const length: number = ImageData32.data.length;
         const pixel: any = ImageData32.data;
         
@@ -56,6 +59,40 @@ export class BasicLib
             pixel[i+3] = 255;
             count++;
         }    
+    }
+
+    // 1次元32bit画像 → 2次元8bit画像
+    public ImageData1d32bitTo2d8bit = (ImageData32: any, ImageData8: Array<number>[]) => {
+        const width: number = ImageData32.width;
+        const height: number = ImageData32.height;
+        const pixel: any = ImageData32.data;
+        
+        let count: number = 0;
+
+        for(let h=0; h<height; h++){
+            for(let w=0; w<width; w++){
+                let i = ( h * width * 4 ) + (w * 4);
+                ImageData8[h][w] = pixel[i+0];
+            }
+        }
+    }
+
+    // 2次元8bit画像 → 1次元32bit画像
+    public ImageData2d8bitTo1d32bit = (ImageData8: Array<number>[], ImageData32: any) => {
+        const width: number = ImageData32.width;
+        const height: number = ImageData32.height;
+        const pixel: any = ImageData32.data;
+            
+        for(let h=0; h<height; h++){
+            for(let w=0; w<width; w++){
+                let i = ( h * width * 4 ) + (w * 4);
+                pixel[i+0] = ImageData8[h][w];
+                pixel[i+1] = ImageData8[h][w];
+                pixel[i+2] = ImageData8[h][w];
+                pixel[i+3] = 255;
+            }
+        }
     }    
+
 }
 

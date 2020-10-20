@@ -1,34 +1,36 @@
 export class Binary
 {
-    public OtsuBinary = (ImageData8: Array<number>, width: number, height: number) => {
+    public OtsuBinary = (ImageData8: Array<number>[], width: number, height: number) => {
 
         const length = width * height;
     
         let hist = new Array(256);
         for(let i=0; i<256; i++) hist[i]=0;
-    
-        for(let i=0; i<length; i++){
-            hist[ImageData8[i]] += 1;
+
+        for(let h=0; h<height; h++){
+            for(let w=0; w<width; w++){
+                hist[ImageData8[h][w]] += 1;
+            }
         }
     
         const thresh = this.getThreshold(hist, 256);
         //const thresh = 120;
     
-        for(let i=0; i<length; i++){
+        for(let h=0; h<height; h++){
+            for(let w=0; w<width; w++){
+                const r = ImageData8[h][w];
     
-            const r = ImageData8[i];
-    
-            let binary;
-    
-            if(r <= thresh){
-                binary = 255;
-            }else{
-                binary = 0;
-            } 
-    
-            ImageData8[i+0] = binary;
-        }
+                let binary;
         
+                if(r <= thresh){
+                    binary = 255;
+                }else{
+                    binary = 0;
+                } 
+        
+                ImageData8[h][w] = binary;
+            }
+        }    
     }
     
     public getThreshold = (hist: any, n: any) => {

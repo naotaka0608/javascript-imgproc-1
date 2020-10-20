@@ -143,25 +143,28 @@ otsuBinary.addEventListener('click', () => {
         const ImageData32 = context.getImageData(0, 0, image.width, image.height);
 
         const width = ImageData32.width;
-        const heigth = ImageData32.height;
+        const height = ImageData32.height;
         const length = ImageData32.data.length;
         const basicLib = new BasicLib();
         const binary = new Binary();
 
-        let ImageData8: Array<number> = new Array(ImageData32.width * ImageData32.height);
+        let imageData8 = new Array(height);
+        for(let h = 0; h < height; h++) {
+            imageData8[h] = new Array(width).fill(0);
+        }
 
         // グレースケール
         basicLib.GrayScale(ImageData32);
 
 
         // 32bitから8bitへ変換
-        basicLib.ImageData32To8(ImageData32, ImageData8);
+        basicLib.ImageData1d32bitTo2d8bit(ImageData32, imageData8);
 
         // 判別分析法による2値化
-        binary.OtsuBinary(ImageData8, width, heigth);
+        binary.OtsuBinary(imageData8, width, height);
 
         // 8bitから32bitへ変換
-        basicLib.ImageData8To32(ImageData8, ImageData32);
+        basicLib.ImageData2d8bitTo1d32bit(imageData8, ImageData32);
 
         context.putImageData(ImageData32, 0, 0);
     };  
@@ -192,29 +195,32 @@ opening.addEventListener('click', () => {
         const ImageData32 = context.getImageData(0, 0, image.width, image.height);
 
         const width = ImageData32.width;
-        const heigth = ImageData32.height;
+        const height = ImageData32.height;
         const length = ImageData32.data.length;
         const basicLib = new BasicLib();
         const noiseFilter = new NoiseFilter();
         const binary = new Binary();
 
-        let ImageData8: Array<number> = new Array(ImageData32.width * ImageData32.height);
+        let imageData8 = new Array(height);
+        for(let h = 0; h < height; h++) {
+            imageData8[h] = new Array(width).fill(0);
+        }
     
         // グレースケール
         basicLib.GrayScale(ImageData32);
     
         // 32bitから8bitへ変換
-        basicLib.ImageData32To8(ImageData32, ImageData8);
+        basicLib.ImageData1d32bitTo2d8bit(ImageData32, imageData8);
     
         // 判別分析法による2値化
-        binary.OtsuBinary(ImageData8, width, heigth);
+        binary.OtsuBinary(imageData8, width, height);
     
         // OpenClose
-        noiseFilter.Closing(ImageData8, width, heigth, 3);
-        noiseFilter.Opening(ImageData8, width, heigth, 3);
+        noiseFilter.Closing(imageData8, width, height, 3);
+        noiseFilter.Opening(imageData8, width, height, 3);
     
         // 8bitから32bitへ変換
-        basicLib.ImageData8To32(ImageData8, ImageData32);
+        basicLib.ImageData2d8bitTo1d32bit(imageData8, ImageData32);
 
         context.putImageData(ImageData32, 0, 0);
     };
@@ -246,34 +252,42 @@ labeling.addEventListener('click', () => {
         const ImageData32 = context.getImageData(0, 0, image.width, image.height);
 
         const width = ImageData32.width;
-        const heigth = ImageData32.height;
+        const height = ImageData32.height;
         const length = ImageData32.data.length;
         const basicLib = new BasicLib();
         const noiseFilter = new NoiseFilter();
         const binary = new Binary();
         const featureExtra = new FeatureExtra();
 
-        let imageData8: Array<number> = new Array(ImageData32.width * ImageData32.height);
+        let imageData8 = new Array(height);
+        for(let h = 0; h < height; h++) {
+            imageData8[h] = new Array(width).fill(0);
+        }
     
         // グレースケール
         basicLib.GrayScale(ImageData32);
     
         // 32bitから8bitへ変換
-        basicLib.ImageData32To8(ImageData32, imageData8);
+        basicLib.ImageData1d32bitTo2d8bit(ImageData32, imageData8);
     
         // 判別分析法による2値化
-        binary.OtsuBinary(imageData8, width, heigth);
+        binary.OtsuBinary(imageData8, width, height);
     
         // OpenClose
-        noiseFilter.Closing(imageData8, width, heigth, 3);
-        noiseFilter.Opening(imageData8, width, heigth, 3);
+        noiseFilter.Closing(imageData8, width, height, 3);
+        noiseFilter.Opening(imageData8, width, height, 3);
     
         // ラベリング
-        //let ImageData8_labeling: Array<number> = new Array(ImageData32.width * ImageData32.height);
-        //featureExtra.Labeling(imageData8, imageData8_labeling, width, heigth);
+        let imageData8_labeling = new Array(height);
+        for(let h = 0; h < height; h++) {
+            imageData8_labeling[h] = new Array(width).fill(0);
+        }
+
+        //featureExtra.Labeling(imageData8, imageData8_labeling, width, height);
     
         // 8bitから32bitへ変換
-        basicLib.ImageData8To32(imageData8, ImageData32);
+        //basicLib.ImageData2d8bitTo1d32bit(imageData8, ImageData32);
+        basicLib.ImageData2d8bitTo1d32bit(imageData8_labeling, ImageData32);
 
         context.putImageData(ImageData32, 0, 0);
     };
