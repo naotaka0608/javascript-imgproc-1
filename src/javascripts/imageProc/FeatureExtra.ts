@@ -1,3 +1,5 @@
+// C言語で学ぶ実践画像処理入門 P113
+
 export class FeatureExtra
 {
 
@@ -13,19 +15,23 @@ export class FeatureExtra
             }
         }
 
-        this.L_BASE = 100;
+        label = this.L_BASE;
 
         for(let i = 0; i < height; i++ ){
             for(let j = 0; j < width; j++){
                 if(imageData8_labeling[i][j] === 255){
-                    return -1;
+                    if(label >= 255){
+                        return -1;
+                    }
+                
+                    this.labelset(imageData8_labeling, width, height, j, i, label);
+                    label++;
                 }
-                this.labelset(imageData8_labeling, width, height, j, i, label);
-                label++;
             }
         }
 
         this.labelCnt = label - this.L_BASE;
+        return 0;
     }
 
     public labelset = (imageData8_labeling: Array<number>[],　width: number, height: number, xs: number, ys: number, label: number) => {
@@ -79,10 +85,11 @@ export class FeatureExtra
                             cnt++;
                         }
                    }
-                   if(cnt === 0) break;
                 }
             }
+            if(cnt === 0) break;
         }
     }
 
+    public GetLabelCnt = () => this.labelCnt;
 }
