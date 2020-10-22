@@ -3,5 +3,6 @@ import './imageProc/BasicLib';
 import './imageProc/Binary';
 import './imageProc/FeatureExtra';
 import './imageProc/NoiseFilter';
+import './index.tsx';
 import './Images';
 import './EventListener';
