@@ -5,5 +5,8 @@ import './imageProc/FeatureExtra';
 import './imageProc/NoiseFilter';
 import './index.tsx';
 import "./App.tsx";
+import "./components/Header.tsx";
+import "./components/Footer.tsx";
+import "./components/Button.tsx";
 import './Images';
 import './EventListener';
