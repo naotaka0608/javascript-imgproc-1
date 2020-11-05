@@ -6,4 +6,3 @@ import './imageProc/NoiseFilter';
 import './index.tsx';
 import "./App.tsx";
 import './Images';
-import './EventListener';
