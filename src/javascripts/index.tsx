@@ -1,10 +1,17 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import App from "./App";
+import ServerTest from "./ServerTest";
 
 ReactDOM.render(
     <div>
-        <App />
+        <ServerTest />
     </div>,
     document.getElementById("root")
 );
+
+// ReactDOM.render(
+//     <div>
+//         <App />
+//     </div>,
+//     document.getElementById("root")
+// );
