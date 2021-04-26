@@ -11,8 +11,10 @@ yarn-error.log*
 
 /public
 /product
-*.js
+
+app.js
 *.js.map
+/routes/*.js
 
 # Runtime data
 pids
